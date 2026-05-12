@@ -1,0 +1,92 @@
+{
+  "results": [
+    {
+      "id": 1,
+      "question": "Which team won the inaugural IPL season in 2008?",
+      "answer": "The provided knowledge does not contain information about the winner of the inaugural IPL season in 2008.",
+      "prompt_tokens": 670,
+      "completion_tokens": 21,
+      "total_tokens": 691,
+      "latency_ms": 41722.8,
+      "cost_usd": 0.00041189,
+      "graph_entities_found": 24,
+      "graph_hops": 2,
+      "fallback": false,
+      "model": "llama-3.3-70b-versatile",
+      "pipeline": "graphrag",
+      "error": null,
+      "_extracted_ids": [
+        "ipl"
+      ],
+      "_seeds_found": 1,
+      "_graph_entities": [
+        "IPL",
+        "Delhi Capitals",
+        "BCCI",
+        "2018 Indian Premier League final",
+        "Mumbai Indians",
+        "Chennai Super Kings",
+        "2020 season",
+        "Dubai",
+        "Delhi Daredevils",
+        ""
+      ]
+    },
+    {
+      "id": 2,
+      "question": "Who captained Chennai Super Kings to win their first IPL title?",
+      "answer": "",
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "latency_ms": 0.0,
+      "cost_usd": 0.0,
+      "graph_entities_found": 0,
+      "graph_hops": 2,
+      "fallback": true,
+      "model": "llama-3.3-70b-versatile",
+      "pipeline": "graphrag",
+      "error": "Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01krb5qqmjf3jb0tzq6nj3cxek` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99663, Requested 749. Please try again in 5m55.968s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": 3,
+      "question": "Who won the Orange Cap in IPL 2016?",
+      "answer": "The provided knowledge does not contain information about IPL 2016.",
+      "prompt_tokens": 222,
+      "completion_tokens": 14,
+      "total_tokens": 236,
+      "latency_ms": 1157.92,
+      "cost_usd": 0.00014204,
+      "graph_entities_found": 5,
+      "graph_hops": 2,
+      "fallback": false,
+      "model": "llama-3.3-70b-versatile",
+      "pipeline": "graphrag",
+      "error": null,
+      "_extracted_ids": [
+        "orange_cap",
+        "ipl_2016"
+      ],
+      "_seeds_found": 1,
+      "_graph_entities": [
+        "Orange Cap",
+        "Kane Williamson",
+        "David Warner",
+        "Sunrisers Hyderabad",
+        "Vivo IPL 2017"
+      ]
+    }
+  ],
+  "summary": {
+    "total_questions": 3,
+    "completed": 2,
+    "fallbacks": 0,
+    "avg_total_tokens": 463.5,
+    "avg_prompt_tokens": 446.0,
+    "avg_completion_tokens": 17.5,
+    "avg_latency_ms": 21440.4,
+    "avg_entities_found": 14.5,
+    "total_cost_usd": 0.000554,
+    "model": "llama-3.3-70b-versatile"
+  }
+}

@@ -1,0 +1,1622 @@
+{
+  "summary": {
+    "pipeline": "basic_rag",
+    "model": "gemini-2.5-flash",
+    "embedding_model": "all-MiniLM-L6-v2",
+    "top_k": 5,
+    "chunk_size": 512,
+    "overlap": 50,
+    "total_questions": 50,
+    "successful": 22,
+    "errors": 28,
+    "avg_prompt_tokens": 2524.1,
+    "avg_completion_tokens": 16.8,
+    "avg_total_tokens": 2540.9,
+    "avg_latency_ms": 1874.6,
+    "total_cost_usd": 0.004276,
+    "total_tokens": 55900,
+    "run_timestamp": "2026-05-11T13:39:44.406283"
+  },
+  "results": [
+    {
+      "id": 1,
+      "question": "Which team won the inaugural IPL season in 2008?",
+      "type": "single-hop",
+      "ground_truth": "Rajasthan Royals won the inaugural IPL season in 2008.",
+      "pipeline": "basic_rag",
+      "answer": "Rajasthan Royals",
+      "retrieved_sources": [
+        "Cricket in India",
+        "Indian Premier League 2009",
+        "2009 Indian Premier League",
+        "Indian Premier League 2008",
+        "2008 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.6272,
+        0.6036,
+        0.6036,
+        0.5839,
+        0.5839
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2785,
+        "completion_tokens": 2,
+        "total_tokens": 2787,
+        "latency_ms": 2196.95,
+        "cost_usd": 0.00020947
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:08:12.999520"
+    },
+    {
+      "id": 2,
+      "question": "Who captained Chennai Super Kings to win their first IPL title?",
+      "type": "single-hop",
+      "ground_truth": "MS Dhoni captained Chennai Super Kings to their first IPL title in 2010.",
+      "pipeline": "basic_rag",
+      "answer": "MS Dhoni captained Chennai Super Kings to win their first IPL title.",
+      "retrieved_sources": [
+        "Chennai Super Kings",
+        "2011 Indian Premier League season",
+        "2011 Indian Premier League",
+        "Indian Premier League 2018",
+        "2018 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.7394,
+        0.7234,
+        0.7234,
+        0.7175,
+        0.7175
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2800,
+        "completion_tokens": 14,
+        "total_tokens": 2814,
+        "latency_ms": 1833.32,
+        "cost_usd": 0.0002142
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:08:18.850546"
+    },
+    {
+      "id": 3,
+      "question": "Who won the Orange Cap in IPL 2016?",
+      "type": "single-hop",
+      "ground_truth": "Virat Kohli won the Orange Cap in IPL 2016, scoring 973 runs in a single season — the highest ever in IPL history.",
+      "pipeline": "basic_rag",
+      "answer": "Virat Kohli won the Orange Cap in IPL 2016.",
+      "retrieved_sources": [
+        "Purple Cap",
+        "Orange Cap",
+        "Indian Premier League 2019",
+        "2019 Indian Premier League",
+        "Indian Premier League controversies"
+      ],
+      "retrieved_scores": [
+        0.5898,
+        0.5898,
+        0.569,
+        0.569,
+        0.5358
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2138,
+        "completion_tokens": 14,
+        "total_tokens": 2152,
+        "latency_ms": 1716.42,
+        "cost_usd": 0.00016455
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:08:24.585097"
+    },
+    {
+      "id": 4,
+      "question": "Who won the Purple Cap in IPL 2013?",
+      "type": "single-hop",
+      "ground_truth": "Dwayne Bravo of Chennai Super Kings won the Purple Cap in IPL 2013 with 32 wickets.",
+      "pipeline": "basic_rag",
+      "answer": "The context does not contain enough information to answer.",
+      "retrieved_sources": [
+        "Indian Premier League 2019",
+        "2019 Indian Premier League",
+        "Rajasthan Royals",
+        "Purple Cap",
+        "Orange Cap"
+      ],
+      "retrieved_scores": [
+        0.5849,
+        0.5849,
+        0.5641,
+        0.5448,
+        0.5448
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2122,
+        "completion_tokens": 10,
+        "total_tokens": 2132,
+        "latency_ms": 1568.04,
+        "cost_usd": 0.00016215
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:08:30.165334"
+    },
+    {
+      "id": 5,
+      "question": "Which team has won the most IPL titles as of 2024?",
+      "type": "single-hop",
+      "ground_truth": "Mumbai Indians have won the most IPL titles — five — in 2013, 2015, 2017, 2019, and 2020.",
+      "pipeline": "basic_rag",
+      "answer": "The context does not contain enough information to answer.",
+      "retrieved_sources": [
+        "Indian Premier League 2022",
+        "2022 Indian Premier League",
+        "Indian Premier League 2024",
+        "2024 Indian Premier League",
+        "2011 Indian Premier League season"
+      ],
+      "retrieved_scores": [
+        0.6196,
+        0.6196,
+        0.6018,
+        0.6018,
+        0.593
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2853,
+        "completion_tokens": 10,
+        "total_tokens": 2863,
+        "latency_ms": 1437.46,
+        "cost_usd": 0.00021698
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:08:35.618337"
+    },
+    {
+      "id": 6,
+      "question": "What is the home ground of Kolkata Knight Riders?",
+      "type": "single-hop",
+      "ground_truth": "The home ground of Kolkata Knight Riders is Eden Gardens in Kolkata.",
+      "pipeline": "basic_rag",
+      "answer": "The home ground of Kolkata Knight Riders is Eden Gardens.",
+      "retrieved_sources": [
+        "Kolkata Knight Riders",
+        "Kolkata Knight Riders",
+        "Kolkata Knight Riders",
+        "Kolkata Knight Riders",
+        "2014 Indian Premier League Final"
+      ],
+      "retrieved_scores": [
+        0.6322,
+        0.6117,
+        0.6043,
+        0.5895,
+        0.5692
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2296,
+        "completion_tokens": 11,
+        "total_tokens": 2307,
+        "latency_ms": 1684.34,
+        "cost_usd": 0.0001755
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:08:41.319489"
+    },
+    {
+      "id": 7,
+      "question": "Who scored the highest individual innings in IPL history?",
+      "type": "single-hop",
+      "ground_truth": "Chris Gayle scored 175* (not out) for Royal Challengers Bangalore against Pune Warriors India on 23 April 2013, the highest individual score in IPL history.",
+      "pipeline": "basic_rag",
+      "answer": "The context provided does not contain enough information to answer who scored the highest individual innings in IPL history.",
+      "retrieved_sources": [
+        "Eden Gardens",
+        "1983 Cricket World Cup",
+        "Rajasthan Royals",
+        "Royal Challengers Bangalore",
+        "Royal Challengers Bengaluru"
+      ],
+      "retrieved_scores": [
+        0.6558,
+        0.629,
+        0.6266,
+        0.6211,
+        0.6211
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2844,
+        "completion_tokens": 20,
+        "total_tokens": 2864,
+        "latency_ms": 2349.59,
+        "cost_usd": 0.0002193
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:09:48.235721"
+    },
+    {
+      "id": 8,
+      "question": "Who has scored the most runs in IPL history?",
+      "type": "single-hop",
+      "ground_truth": "Virat Kohli is the all-time leading run scorer in IPL history.",
+      "pipeline": "basic_rag",
+      "answer": "The context provided does not contain enough information to answer who has scored the most runs in IPL history.",
+      "retrieved_sources": [
+        "Rajat Patidar",
+        "Eden Gardens",
+        "Royal Challengers Bangalore",
+        "Royal Challengers Bengaluru",
+        "National Cricket Academy"
+      ],
+      "retrieved_scores": [
+        0.6258,
+        0.5991,
+        0.5954,
+        0.5954,
+        0.591
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2577,
+        "completion_tokens": 20,
+        "total_tokens": 2597,
+        "latency_ms": 1723.99,
+        "cost_usd": 0.00019928
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:09:53.969078"
+    },
+    {
+      "id": 9,
+      "question": "Who captained Rajasthan Royals in the 2008 IPL season?",
+      "type": "single-hop",
+      "ground_truth": "Shane Warne captained Rajasthan Royals in the 2008 IPL season.",
+      "pipeline": "basic_rag",
+      "answer": "Shane Warne",
+      "retrieved_sources": [
+        "Rajasthan Royals",
+        "Rajasthan Royals",
+        "Rajasthan Royals",
+        "Rajasthan Royals",
+        "Rajasthan Royals"
+      ],
+      "retrieved_scores": [
+        0.7501,
+        0.7203,
+        0.7172,
+        0.7031,
+        0.7018
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2765,
+        "completion_tokens": 3,
+        "total_tokens": 2768,
+        "latency_ms": 1671.51,
+        "cost_usd": 0.00020828
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:09:59.655372"
+    },
+    {
+      "id": 10,
+      "question": "Which IPL team plays its home games at M. A. Chidambaram Stadium?",
+      "type": "single-hop",
+      "ground_truth": "Chennai Super Kings play their home games at M. A. Chidambaram Stadium in Chennai.",
+      "pipeline": "basic_rag",
+      "answer": "Chennai Super Kings.",
+      "retrieved_sources": [
+        "M. A. Chidambaram Stadium",
+        "Indian Premier League 2024",
+        "2024 Indian Premier League",
+        "Subrata Roy Sahara Stadium",
+        "Maharashtra Cricket Association Stadium"
+      ],
+      "retrieved_scores": [
+        0.651,
+        0.6087,
+        0.6087,
+        0.5967,
+        0.5967
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2833,
+        "completion_tokens": 4,
+        "total_tokens": 2837,
+        "latency_ms": 1881.33,
+        "cost_usd": 0.00021368
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:10:05.559321"
+    },
+    {
+      "id": 11,
+      "question": "Which team won the IPL 2024 title?",
+      "type": "single-hop",
+      "ground_truth": "Kolkata Knight Riders won the IPL 2024 title, defeating Sunrisers Hyderabad in the final.",
+      "pipeline": "basic_rag",
+      "answer": "Kolkata Knight Riders won the IPL 2024 title.",
+      "retrieved_sources": [
+        "Indian Premier League 2022",
+        "2022 Indian Premier League",
+        "Indian Premier League 2024",
+        "2024 Indian Premier League",
+        "Indian Premier League 2021"
+      ],
+      "retrieved_scores": [
+        0.6439,
+        0.6439,
+        0.6127,
+        0.6127,
+        0.6031
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2847,
+        "completion_tokens": 15,
+        "total_tokens": 2862,
+        "latency_ms": 1627.08,
+        "cost_usd": 0.00021803
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:10:11.194423"
+    },
+    {
+      "id": 12,
+      "question": "Who is nicknamed 'Captain Cool' in Indian cricket?",
+      "type": "single-hop",
+      "ground_truth": "MS Dhoni is nicknamed 'Captain Cool' for his calm demeanour under pressure.",
+      "pipeline": "basic_rag",
+      "answer": "The provided context does not contain enough information to answer the question.",
+      "retrieved_sources": [
+        "Sourav Ganguly",
+        "Rahul Dravid",
+        "Ian Chappell",
+        "Sanju Samson",
+        "KL Rahul"
+      ],
+      "retrieved_scores": [
+        0.6102,
+        0.593,
+        0.5903,
+        0.5741,
+        0.572
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2779,
+        "completion_tokens": 13,
+        "total_tokens": 2792,
+        "latency_ms": 1510.61,
+        "cost_usd": 0.00021232
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:10:16.722606"
+    },
+    {
+      "id": 13,
+      "question": "In which city is Wankhede Stadium located?",
+      "type": "single-hop",
+      "ground_truth": "Wankhede Stadium is located in Mumbai.",
+      "pipeline": "basic_rag",
+      "answer": "Wankhede Stadium is located in Mumbai, India.",
+      "retrieved_sources": [
+        "Wankhede Stadium",
+        "Mumbai Indians",
+        "Wankhede Stadium",
+        "Narendra Modi Stadium",
+        "2016 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.6421,
+        0.6345,
+        0.6214,
+        0.5267,
+        0.5266
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2411,
+        "completion_tokens": 11,
+        "total_tokens": 2422,
+        "latency_ms": 1812.77,
+        "cost_usd": 0.00018412
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:10:22.560622"
+    },
+    {
+      "id": 14,
+      "question": "Who won the Purple Cap in IPL 2023?",
+      "type": "single-hop",
+      "ground_truth": "Mohammed Shami of Gujarat Titans won the Purple Cap in IPL 2023 with 28 wickets.",
+      "pipeline": "basic_rag",
+      "answer": "The context does not contain enough information to answer.",
+      "retrieved_sources": [
+        "Indian Premier League 2019",
+        "2019 Indian Premier League",
+        "Rajasthan Royals",
+        "Indian Premier League 2018",
+        "2018 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.5795,
+        0.5795,
+        0.5454,
+        0.5424,
+        0.5424
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2176,
+        "completion_tokens": 10,
+        "total_tokens": 2186,
+        "latency_ms": 1311.33,
+        "cost_usd": 0.0001662
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:10:27.884066"
+    },
+    {
+      "id": 15,
+      "question": "Which overseas player holds the record for most centuries in IPL history?",
+      "type": "single-hop",
+      "ground_truth": "Chris Gayle holds the record for most centuries in IPL history with 6 centuries.",
+      "pipeline": "basic_rag",
+      "answer": "The context does not contain enough information to answer which overseas player holds the record for most centuries in IPL history.",
+      "retrieved_sources": [
+        "List of Indian Premier League centuries",
+        "List of international cricket centuries by Rohit Sharma",
+        "Abhishek Sharma (cricketer)",
+        "List of Indian Premier League centuries",
+        "Javed Miandad"
+      ],
+      "retrieved_scores": [
+        0.6762,
+        0.6384,
+        0.5982,
+        0.5767,
+        0.5634
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 1407,
+        "completion_tokens": 22,
+        "total_tokens": 1429,
+        "latency_ms": 1595.96,
+        "cost_usd": 0.00011213
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:10:33.498806"
+    },
+    {
+      "id": 16,
+      "question": "In which year was the Indian Premier League founded and its first season played?",
+      "type": "single-hop",
+      "ground_truth": "The Indian Premier League was founded in 2007 by the BCCI and the first season was played in 2008.",
+      "pipeline": "basic_rag",
+      "answer": "The Indian Premier League was founded in 2007, and its inaugural season was scheduled to start in April 2008.",
+      "retrieved_sources": [
+        "Indian Premier League 2013",
+        "2013 Indian Premier League",
+        "Brabourne Stadium",
+        "Indian Premier League controversies",
+        "Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.578,
+        0.578,
+        0.5637,
+        0.558,
+        0.558
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2835,
+        "completion_tokens": 29,
+        "total_tokens": 2864,
+        "latency_ms": 1630.36,
+        "cost_usd": 0.00022132
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:10:39.147838"
+    },
+    {
+      "id": 17,
+      "question": "Who won the Emerging Player of the Year award in IPL 2022?",
+      "type": "single-hop",
+      "ground_truth": "Umran Malik of Sunrisers Hyderabad won the Emerging Player of the Year award in IPL 2022.",
+      "pipeline": "basic_rag",
+      "answer": "The context does not contain enough information to answer.",
+      "retrieved_sources": [
+        "Matheesha Pathirana",
+        "Kieron Pollard",
+        "Naman Dhir",
+        "Rachin Ravindra",
+        "Ruturaj Gaikwad"
+      ],
+      "retrieved_scores": [
+        0.5899,
+        0.5862,
+        0.5609,
+        0.5598,
+        0.5583
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 1920,
+        "completion_tokens": 10,
+        "total_tokens": 1930,
+        "latency_ms": 1677.75,
+        "cost_usd": 0.000147
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:10:44.836510"
+    },
+    {
+      "id": 18,
+      "question": "Who has taken the most wickets in IPL history overall?",
+      "type": "single-hop",
+      "ground_truth": "Yuzvendra Chahal is the all-time leading wicket-taker in IPL history.",
+      "pipeline": "basic_rag",
+      "answer": "Yuzvendra Chahal holds the record for the most wickets taken (205) in IPL history.",
+      "retrieved_sources": [
+        "Slow left-arm orthodox",
+        "Indian Premier League records and statistics",
+        "Indian Premier League records and statistics",
+        "Eden Gardens",
+        "Royal Challengers Bangalore"
+      ],
+      "retrieved_scores": [
+        0.695,
+        0.6803,
+        0.6636,
+        0.6581,
+        0.6537
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2545,
+        "completion_tokens": 23,
+        "total_tokens": 2568,
+        "latency_ms": 2160.15,
+        "cost_usd": 0.00019777
+      },
+      "error": null,
+      "timestamp": "2026-05-11T08:11:51.550787"
+    },
+    {
+      "id": 19,
+      "question": "In which year did Gujarat Titans win their first IPL title?",
+      "type": "single-hop",
+      "ground_truth": "Gujarat Titans won their first IPL title in 2022, in just their debut season.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Gujarat Titans",
+        "2022 Indian Premier League Final",
+        "Indian Premier League 2022",
+        "2022 Indian Premier League",
+        "Shubman Gill"
+      ],
+      "retrieved_scores": [
+        0.7546,
+        0.7429,
+        0.7083,
+        0.7083,
+        0.6844
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 214229.19,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 23.187015517s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '23s'}]}}",
+      "timestamp": "2026-05-11T09:12:38.683796"
+    },
+    {
+      "id": 20,
+      "question": "Which venue is the world's largest cricket stadium by capacity and is used by which IPL team?",
+      "type": "single-hop",
+      "ground_truth": "Narendra Modi Stadium in Ahmedabad is the world's largest cricket stadium by capacity (132,000). It is the home ground of Gujarat Titans.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "DY Patil Stadium",
+        "Himachal Pradesh Cricket Association Stadium",
+        "Rajiv Gandhi International Cricket Stadium",
+        "Green Park Stadium",
+        "M. Chinnaswamy Stadium"
+      ],
+      "retrieved_scores": [
+        0.729,
+        0.7213,
+        0.6984,
+        0.661,
+        0.6574
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213028.55,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 40.053784928s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '40s'}]}}",
+      "timestamp": "2026-05-11T09:16:21.713284"
+    },
+    {
+      "id": 21,
+      "question": "Which player won the Orange Cap in the same season their team also won the IPL title?",
+      "type": "multi-hop",
+      "ground_truth": "Shaun Marsh won the Orange Cap in IPL 2008 with 616 runs, and his team Rajasthan Royals also won the IPL title that same season, making him the only player to achieve this double.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Purple Cap",
+        "Orange Cap",
+        "Rajasthan Royals",
+        "Indian Premier League controversies",
+        "Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.6043,
+        0.6043,
+        0.5654,
+        0.5405,
+        0.5405
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213085.33,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 56.973740736s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '56s'}]}}",
+      "timestamp": "2026-05-11T09:20:04.799993"
+    },
+    {
+      "id": 22,
+      "question": "Which venue hosted the IPL final in the year CSK won their third IPL title?",
+      "type": "multi-hop",
+      "ground_truth": "CSK won their third IPL title in 2018. The 2018 IPL final was played at Wankhede Stadium, Mumbai, where CSK defeated Sunrisers Hyderabad.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Narendra Modi Stadium",
+        "2011 Indian Premier League season",
+        "2011 Indian Premier League",
+        "2018 Indian Premier League Final",
+        "2014 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.6199,
+        0.5896,
+        0.5896,
+        0.5868,
+        0.586
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 212443.56,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 14.546065273s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '14s'}]}}",
+      "timestamp": "2026-05-11T09:23:47.244989"
+    },
+    {
+      "id": 23,
+      "question": "Who captained the team that defeated MS Dhoni's Chennai Super Kings in the inaugural 2008 IPL final?",
+      "type": "multi-hop",
+      "ground_truth": "Shane Warne captained Rajasthan Royals, who defeated MS Dhoni's Chennai Super Kings in the 2008 IPL final. It was Shane Warne's only IPL season as captain.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Indian Premier League 2008",
+        "2008 Indian Premier League",
+        "MS Dhoni",
+        "Kings XI Punjab",
+        "Punjab Kings"
+      ],
+      "retrieved_scores": [
+        0.7141,
+        0.7141,
+        0.68,
+        0.6772,
+        0.6772
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 212771.05,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 31.771641951s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '31s'}]}}",
+      "timestamp": "2026-05-11T09:27:30.016939"
+    },
+    {
+      "id": 24,
+      "question": "Which player has scored the most runs in IPL history while always playing for a franchise that has never won the IPL title?",
+      "type": "multi-hop",
+      "ground_truth": "Virat Kohli has scored the most runs in IPL history, all for Royal Challengers Bangalore (now Bengaluru), which has never won the IPL title despite reaching the final three times (2009, 2011, 2016).",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Rajat Patidar",
+        "Jos Buttler",
+        "Rajasthan Royals",
+        "List of Indian Premier League centuries",
+        "Indian Premier League records and statistics"
+      ],
+      "retrieved_scores": [
+        0.5951,
+        0.5764,
+        0.5752,
+        0.5746,
+        0.5667
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213993.8,
+        "cost_usd": 0.0
+      },
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "timestamp": "2026-05-11T09:31:14.012385"
+    },
+    {
+      "id": 25,
+      "question": "Which team won IPL 2020 and where was that entire season held?",
+      "type": "multi-hop",
+      "ground_truth": "Mumbai Indians won the IPL 2020 title. Due to the COVID-19 pandemic, the entire 2020 IPL season was held in the UAE across three venues: Dubai International Cricket Stadium, Sheikh Zayed Cricket Stadium (Abu Dhabi), and Sharjah Cricket Stadium.",
+      "pipeline": "basic_rag",
+      "answer": "The Mumbai Indians won IPL 2020. The entire season was held in the United Arab Emirates.",
+      "retrieved_sources": [
+        "2020 Indian Premier League Final",
+        "Indian Premier League 2015",
+        "2015 Indian Premier League",
+        "2021 Indian Premier League Final",
+        "Narendra Modi Stadium"
+      ],
+      "retrieved_scores": [
+        0.6336,
+        0.6014,
+        0.6014,
+        0.5918,
+        0.591
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2899,
+        "completion_tokens": 22,
+        "total_tokens": 2921,
+        "latency_ms": 2465.17,
+        "cost_usd": 0.00022403
+      },
+      "error": null,
+      "timestamp": "2026-05-11T09:31:57.220574"
+    },
+    {
+      "id": 26,
+      "question": "Which player captained KKR to back-to-back IPL titles in 2012 and 2014, and what major coaching role did he take up later?",
+      "type": "multi-hop",
+      "ground_truth": "Gautam Gambhir captained Kolkata Knight Riders to consecutive IPL titles in 2012 and 2014. He later became the head coach of the Indian national cricket team in 2024.",
+      "pipeline": "basic_rag",
+      "answer": "The context does not contain enough information to answer.",
+      "retrieved_sources": [
+        "Dinesh Karthik",
+        "Pune Warriors India",
+        "Robin Singh (cricketer)",
+        "Royal Challengers Bangalore",
+        "Royal Challengers Bengaluru"
+      ],
+      "retrieved_scores": [
+        0.6447,
+        0.6344,
+        0.6305,
+        0.6196,
+        0.6196
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2792,
+        "completion_tokens": 10,
+        "total_tokens": 2802,
+        "latency_ms": 2584.01,
+        "cost_usd": 0.0002124
+      },
+      "error": null,
+      "timestamp": "2026-05-11T09:32:09.816223"
+    },
+    {
+      "id": 27,
+      "question": "Which bowler won the Purple Cap in two consecutive IPL seasons for the same franchise, and which team did he represent?",
+      "type": "multi-hop",
+      "ground_truth": "Bhuvneshwar Kumar of Sunrisers Hyderabad won the Purple Cap in back-to-back seasons — IPL 2016 (23 wickets) and IPL 2017 (26 wickets) — both times for the same franchise.",
+      "pipeline": "basic_rag",
+      "answer": "The context does not contain enough information to answer which bowler won the Purple Cap in two consecutive IPL seasons for the same franchise. It only states that Bhuvneshwar Kumar, Dwayne Bravo, and Harshal Patel have won the Purple Cap twice.",
+      "retrieved_sources": [
+        "Purple Cap",
+        "Orange Cap",
+        "Indian Premier League 2020",
+        "2020 Indian Premier League",
+        "Rajasthan Royals"
+      ],
+      "retrieved_scores": [
+        0.5983,
+        0.5983,
+        0.5964,
+        0.5964,
+        0.5937
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2078,
+        "completion_tokens": 48,
+        "total_tokens": 2126,
+        "latency_ms": 2147.52,
+        "cost_usd": 0.00017025
+      },
+      "error": null,
+      "timestamp": "2026-05-11T09:32:53.035709"
+    },
+    {
+      "id": 28,
+      "question": "Who won the Orange Cap in IPL 2021 and did his team also win the IPL title that season?",
+      "type": "multi-hop",
+      "ground_truth": "Ruturaj Gaikwad won the Orange Cap in IPL 2021 with 635 runs. Yes, his team Chennai Super Kings also won the IPL 2021 title, making it a rare instance where both the Orange Cap winner and the championship came from the same team.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Purple Cap",
+        "Orange Cap",
+        "Rajasthan Royals",
+        "Indian Premier League 2018",
+        "2018 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.6034,
+        0.6034,
+        0.5759,
+        0.5682,
+        0.5682
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 214686.74,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 24.132155286s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '24s'}]}}",
+      "timestamp": "2026-05-11T09:36:37.724036"
+    },
+    {
+      "id": 29,
+      "question": "Which player scored a century in the very first IPL match ever played, and which teams were involved?",
+      "type": "multi-hop",
+      "ground_truth": "Brendon McCullum scored 158* (not out) for Kolkata Knight Riders against Royal Challengers Bangalore in the very first IPL match on 18 April 2008. This remains one of the most iconic innings in IPL history.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "List of Indian Premier League centuries",
+        "Rajasthan Royals",
+        "List of Indian Premier League centuries",
+        "Royal Challengers Bangalore",
+        "Royal Challengers Bengaluru"
+      ],
+      "retrieved_scores": [
+        0.5728,
+        0.5617,
+        0.5555,
+        0.5449,
+        0.5449
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 214055.35,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 40.150477484s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '40s'}]}}",
+      "timestamp": "2026-05-11T09:40:21.780136"
+    },
+    {
+      "id": 30,
+      "question": "Which team did Mumbai Indians defeat in the 2019 IPL final, and who captained the losing side?",
+      "type": "multi-hop",
+      "ground_truth": "Mumbai Indians defeated Chennai Super Kings in the 2019 IPL final by 1 run in a nail-biting finish. MS Dhoni captained the losing Chennai Super Kings side.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Mumbai Indians",
+        "2019 Indian Premier League Final",
+        "Mumbai Indians",
+        "2017 Indian Premier League Final",
+        "2013 Indian Premier League Final"
+      ],
+      "retrieved_scores": [
+        0.7339,
+        0.7271,
+        0.7254,
+        0.6752,
+        0.6735
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 528900.02,
+        "cost_usd": 0.0
+      },
+      "error": "[Errno 11001] getaddrinfo failed",
+      "timestamp": "2026-05-11T09:49:20.681395"
+    },
+    {
+      "id": 31,
+      "question": "Which IPL franchise has appeared in the most IPL finals and how many titles have they won?",
+      "type": "multi-hop",
+      "ground_truth": "Chennai Super Kings have appeared in the most IPL finals — 10 finals as of 2023. They have won the title 5 times (2010, 2011, 2018, 2021, 2023).",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Chennai Super Kings",
+        "Indian Premier League 2024",
+        "2024 Indian Premier League",
+        "Indian Premier League controversies",
+        "Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.5841,
+        0.5705,
+        0.5705,
+        0.566,
+        0.566
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 11.54,
+        "cost_usd": 0.0
+      },
+      "error": "[Errno 11001] getaddrinfo failed",
+      "timestamp": "2026-05-11T09:49:30.694517"
+    },
+    {
+      "id": 32,
+      "question": "Which IPL season was played outside India for the first time, where was it held, and which team won?",
+      "type": "multi-hop",
+      "ground_truth": "IPL 2009 was the first season played outside India, held in South Africa due to the Indian general elections coinciding with the tournament. The Deccan Chargers won the 2009 IPL title.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Indian Premier League 2016",
+        "2016 Indian Premier League",
+        "Cricket in India",
+        "Indian Premier League 2012",
+        "2012 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.7323,
+        0.7323,
+        0.7277,
+        0.7242,
+        0.7242
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 15.09,
+        "cost_usd": 0.0
+      },
+      "error": "[Errno 11001] getaddrinfo failed",
+      "timestamp": "2026-05-11T09:49:40.710587"
+    },
+    {
+      "id": 33,
+      "question": "Rohit Sharma debuted in IPL for which franchise before moving to Mumbai Indians, and how many IPL titles has he won with MI?",
+      "type": "multi-hop",
+      "ground_truth": "Rohit Sharma made his IPL debut for Deccan Chargers (2008–2010) before moving to Mumbai Indians in 2011. He has won five IPL titles with Mumbai Indians (2013, 2015, 2017, 2019, 2020).",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Rohit Sharma",
+        "Cricket in India",
+        "Mumbai Indians",
+        "KL Rahul",
+        "Prasidh Krishna"
+      ],
+      "retrieved_scores": [
+        0.7014,
+        0.6928,
+        0.6776,
+        0.6668,
+        0.6601
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 12.89,
+        "cost_usd": 0.0
+      },
+      "error": "[Errno 11001] getaddrinfo failed",
+      "timestamp": "2026-05-11T09:49:50.724334"
+    },
+    {
+      "id": 34,
+      "question": "Which player has won the most IPL titles overall and with how many different franchises?",
+      "type": "multi-hop",
+      "ground_truth": "Several players have won 5 IPL titles, all with Mumbai Indians (e.g., Rohit Sharma, Kieron Pollard, Harbhajan Singh for part of it). No player has won 5 titles across multiple franchises. Rohit Sharma and Kieron Pollard both won all 5 of their titles with Mumbai Indians.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Indian Premier League records and statistics",
+        "Rajasthan Royals",
+        "Jos Buttler",
+        "Indian Premier League controversies",
+        "Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.5552,
+        0.5492,
+        0.544,
+        0.5387,
+        0.5387
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213810.87,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 27.387931978s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '27s'}]}}",
+      "timestamp": "2026-05-11T09:53:34.536214"
+    },
+    {
+      "id": 35,
+      "question": "Which team did CSK and RR replace during their two-year suspension from the IPL (2016–2017), and who won the IPL in those two years?",
+      "type": "multi-hop",
+      "ground_truth": "When CSK and Rajasthan Royals were suspended for 2 years (2016–2017) due to the betting scandal, they were replaced by Rising Pune Supergiant and Gujarat Lions. Sunrisers Hyderabad won IPL 2016, and Mumbai Indians won IPL 2017.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Rajasthan Royals",
+        "Indian Premier League 2021",
+        "2021 Indian Premier League",
+        "Indian Premier League 2016",
+        "2016 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.6043,
+        0.6038,
+        0.6038,
+        0.5899,
+        0.5899
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213432.27,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 44.035854806s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '44s'}]}}",
+      "timestamp": "2026-05-11T09:57:17.970078"
+    },
+    {
+      "id": 36,
+      "question": "Which player won both the Man of the Tournament award and the Orange Cap in IPL 2016?",
+      "type": "multi-hop",
+      "ground_truth": "Virat Kohli won both the Man of the Tournament award and the Orange Cap in IPL 2016. He scored 973 runs that season — the highest in a single IPL season — at an average of over 81, including 4 centuries and 7 fifties.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Pakistan Super League",
+        "Purple Cap",
+        "Orange Cap",
+        "Indian Premier League controversies",
+        "Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.5952,
+        0.595,
+        0.595,
+        0.5838,
+        0.5838
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213743.0,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 224.169062ms.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '0s'}]}}",
+      "timestamp": "2026-05-11T10:01:01.714190"
+    },
+    {
+      "id": 37,
+      "question": "Which coach guided India to the 2011 ICC Cricket World Cup and also coached an IPL franchise?",
+      "type": "multi-hop",
+      "ground_truth": "Gary Kirsten was India's head coach when they won the 2011 ICC Cricket World Cup. He later served as head coach of Royal Challengers Bangalore in the IPL.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Pune Warriors India",
+        "Robin Singh (cricketer)",
+        "2011 Indian Premier League season",
+        "2011 Indian Premier League",
+        "Sridharan Sriram"
+      ],
+      "retrieved_scores": [
+        0.6837,
+        0.6805,
+        0.6801,
+        0.6801,
+        0.641
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 215004.15,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 15.346199857s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '15s'}]}}",
+      "timestamp": "2026-05-11T10:04:46.719746"
+    },
+    {
+      "id": 38,
+      "question": "Who was the leading wicket-taker in the IPL season when Mumbai Indians won their record fifth title in 2020?",
+      "type": "multi-hop",
+      "ground_truth": "In IPL 2020, when Mumbai Indians won their record fifth title, Kagiso Rabada of Delhi Capitals won the Purple Cap with 30 wickets — the most by any bowler that season.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Mumbai Indians",
+        "Mumbai Indians",
+        "Kings XI Punjab",
+        "Punjab Kings",
+        "2017 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.7442,
+        0.7361,
+        0.7188,
+        0.7188,
+        0.715
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213712.21,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 31.639724651s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '31s'}]}}",
+      "timestamp": "2026-05-11T10:08:30.433214"
+    },
+    {
+      "id": 39,
+      "question": "Which two IPL teams were involved in the 2023 IPL final, who won, and who were their captains?",
+      "type": "multi-hop",
+      "ground_truth": "Chennai Super Kings and Gujarat Titans contested the 2023 IPL final. Chennai Super Kings won by 5 wickets. MS Dhoni captained CSK while Shubman Gill captained Gujarat Titans.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "2023 Indian Premier League Final",
+        "Narendra Modi Stadium",
+        "Delhi Daredevils",
+        "Delhi Capitals",
+        "2021 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.6072,
+        0.5989,
+        0.5927,
+        0.5927,
+        0.5875
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 214112.04,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 47.453235485s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '47s'}]}}",
+      "timestamp": "2026-05-11T10:12:14.547526"
+    },
+    {
+      "id": 40,
+      "question": "Lasith Malinga holds the record for the most wickets in IPL for Mumbai Indians. How many wickets did he take, and what unique delivery is he known for?",
+      "type": "multi-hop",
+      "ground_truth": "Lasith Malinga is Mumbai Indians' all-time highest wicket-taker in IPL with 170 wickets across multiple seasons. He is famous for his distinctive round-arm sling-action yorker delivery, which made him one of the most dangerous bowlers in T20 cricket.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Lasith Malinga",
+        "Lasith Malinga",
+        "Lasith Malinga",
+        "Lasith Malinga",
+        "Lasith Malinga"
+      ],
+      "retrieved_scores": [
+        0.6984,
+        0.6604,
+        0.6528,
+        0.6501,
+        0.6388
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213656.1,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 3.84923327s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '3s'}]}}",
+      "timestamp": "2026-05-11T10:15:58.204997"
+    },
+    {
+      "id": 41,
+      "question": "Which player has represented both Chennai Super Kings and Kolkata Knight Riders in IPL, and won a title with one of them?",
+      "type": "multi-hop",
+      "ground_truth": "Harbhajan Singh played for Mumbai Indians (winning titles in 2013, 2015) and later for Chennai Super Kings (2018–2021 season). However, he did not win a title while at CSK. He was part of CSK's squad but wasn't retained when they returned in 2018. He did win IPL titles with Mumbai Indians across his career before joining CSK.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Kolkata Knight Riders",
+        "Indian Premier League 2018",
+        "2018 Indian Premier League",
+        "Indian Premier League 2015",
+        "2015 Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.7343,
+        0.7313,
+        0.7313,
+        0.694,
+        0.694
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213612.46,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 20.172509262s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.5-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '20s'}]}}",
+      "timestamp": "2026-05-11T10:19:41.819229"
+    },
+    {
+      "id": 42,
+      "question": "Which IPL franchise changed its name and what was it originally called?",
+      "type": "multi-hop",
+      "ground_truth": "Multiple franchises have changed names: Delhi Daredevils became Delhi Capitals in 2019; Kings XI Punjab became Punjab Kings in 2021; Royal Challengers Bangalore became Royal Challengers Bengaluru. Delhi Daredevils was one of the founding teams that rebranded to Delhi Capitals.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Kings XI Punjab",
+        "Punjab Kings",
+        "Rajasthan Royals",
+        "Indian Premier League controversies",
+        "Indian Premier League"
+      ],
+      "retrieved_scores": [
+        0.5228,
+        0.5228,
+        0.5183,
+        0.5033,
+        0.5033
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213199.13,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 37.017380807s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '37s'}]}}",
+      "timestamp": "2026-05-11T10:23:25.020306"
+    },
+    {
+      "id": 43,
+      "question": "MS Dhoni has won the IPL title five times with CSK. In which years did CSK NOT win the title, and who won in those seasons they played?",
+      "type": "multi-hop",
+      "ground_truth": "CSK won in 2010, 2011, 2018, 2021, and 2023. They did not win in seasons they played: 2008 (RR won), 2009 (DC won), 2012 (KKR won), 2013 (MI won), 2014 (KKR won), 2015 (MI won), 2019 (MI won). They were also suspended in 2016 and 2017.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "MS Dhoni",
+        "MS Dhoni",
+        "2011 Indian Premier League season",
+        "2011 Indian Premier League",
+        "Rajasthan Royals"
+      ],
+      "retrieved_scores": [
+        0.7023,
+        0.6396,
+        0.6219,
+        0.6219,
+        0.6146
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213846.75,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 53.196341792s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '53s'}]}}",
+      "timestamp": "2026-05-11T10:27:08.868990"
+    },
+    {
+      "id": 44,
+      "question": "Which overseas bowler took the most wickets in a single IPL season, and for which team?",
+      "type": "multi-hop",
+      "ground_truth": "Kagiso Rabada of Delhi Capitals took 30 wickets in IPL 2020, the most by an overseas bowler in a single IPL season. He won the Purple Cap that year.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "1983 Cricket World Cup",
+        "Eden Gardens",
+        "Slow left-arm orthodox",
+        "Lord's Cricket Ground",
+        "Royal Challengers Bangalore"
+      ],
+      "retrieved_scores": [
+        0.6665,
+        0.6649,
+        0.6627,
+        0.6558,
+        0.6528
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 6286218.39,
+        "cost_usd": 0.0
+      },
+      "error": "[Errno 11001] getaddrinfo failed",
+      "timestamp": "2026-05-11T12:12:05.089189"
+    },
+    {
+      "id": 45,
+      "question": "Jos Buttler holds the record for most runs in a single IPL season for Rajasthan Royals. In which year did he achieve this, how many runs did he score, and did RR win the title?",
+      "type": "multi-hop",
+      "ground_truth": "Jos Buttler scored 863 runs in IPL 2022 for Rajasthan Royals, winning the Orange Cap. Despite his heroics, Rajasthan Royals reached the final but lost to Gujarat Titans, who won their first-ever IPL title that year.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Jos Buttler",
+        "Rajasthan Royals",
+        "Rajasthan Royals",
+        "Rajasthan Royals",
+        "Jos Buttler"
+      ],
+      "retrieved_scores": [
+        0.6969,
+        0.6879,
+        0.666,
+        0.6587,
+        0.6449
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 727.65,
+        "cost_usd": 0.0
+      },
+      "error": "[Errno 11001] getaddrinfo failed",
+      "timestamp": "2026-05-11T13:24:35.086188"
+    },
+    {
+      "id": 46,
+      "question": "Which player has been the captain of both Sunrisers Hyderabad and another IPL franchise, and won the IPL with SRH?",
+      "type": "multi-hop",
+      "ground_truth": "David Warner captained Sunrisers Hyderabad and led them to the IPL title in 2016. He was later released and played for Delhi Capitals, where he also served as captain. He thus captained two different IPL franchises.",
+      "pipeline": "basic_rag",
+      "answer": "The context provided does not contain enough information to answer which player has been the captain of both Sunrisers Hyderabad and another IPL franchise. It only states that David Warner was captain when SRH won the IPL in 2016.",
+      "retrieved_sources": [
+        "Rajiv Gandhi International Cricket Stadium",
+        "Sunrisers Hyderabad",
+        "Sunrisers Hyderabad",
+        "Sunrisers Hyderabad",
+        "Royal Challengers Bangalore"
+      ],
+      "retrieved_scores": [
+        0.7388,
+        0.7377,
+        0.6972,
+        0.6817,
+        0.6532
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 2829,
+        "completion_tokens": 48,
+        "total_tokens": 2877,
+        "latency_ms": 2656.51,
+        "cost_usd": 0.00022657
+      },
+      "error": null,
+      "timestamp": "2026-05-11T13:24:47.763973"
+    },
+    {
+      "id": 47,
+      "question": "Which IPL venue has hosted the most IPL finals, and which teams played the most recent final held there?",
+      "type": "multi-hop",
+      "ground_truth": "Wankhede Stadium in Mumbai has hosted the most IPL finals. The 2023 IPL final was not at Wankhede; the 2024 IPL final was held at M. A. Chidambaram Stadium in Chennai. Wankhede has hosted several finals over the years including 2013 (MI vs CSK) and 2015 (MI vs CSK).",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Narendra Modi Stadium",
+        "Indian Premier League 2021",
+        "2021 Indian Premier League",
+        "Dubai International Cricket Stadium",
+        "Indian Premier League 2014"
+      ],
+      "retrieved_scores": [
+        0.5815,
+        0.5691,
+        0.5691,
+        0.554,
+        0.5531
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213511.44,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 31.64855268s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.5-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '31s'}]}}",
+      "timestamp": "2026-05-11T13:28:31.277865"
+    },
+    {
+      "id": 48,
+      "question": "Andre Russell of KKR is known for his hitting. What is his record for the fastest fifty in IPL history, and in which season?",
+      "type": "multi-hop",
+      "ground_truth": "Andre Russell is renowned as one of the most destructive hitters in IPL history for Kolkata Knight Riders. He holds records for fastest fifties and extraordinary strike rates, though the exact record has varied — his IPL 2019 season was particularly exceptional with 510 runs at a strike rate of over 200.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Andre Russell",
+        "Royal Challengers Bangalore",
+        "Royal Challengers Bengaluru",
+        "Kolkata Knight Riders",
+        "Abhishek Sharma (cricketer)"
+      ],
+      "retrieved_scores": [
+        0.6871,
+        0.6631,
+        0.6631,
+        0.574,
+        0.5735
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 213921.84,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 47.665280947s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '47s'}]}}",
+      "timestamp": "2026-05-11T13:32:15.242457"
+    },
+    {
+      "id": 49,
+      "question": "Which player scored centuries for two different IPL franchises and is also an all-rounder?",
+      "type": "multi-hop",
+      "ground_truth": "Shane Watson is one notable example — he scored IPL centuries for Rajasthan Royals and Chennai Super Kings as an all-rounder. He won Man of the Match in the 2018 IPL final scoring 117* for CSK against SRH. Chris Gayle also scored centuries for multiple teams (KKR and RCB).",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "List of Indian Premier League centuries",
+        "List of Indian Premier League centuries",
+        "Jos Buttler",
+        "Rajat Patidar",
+        "Andre Russell"
+      ],
+      "retrieved_scores": [
+        0.6948,
+        0.6295,
+        0.6065,
+        0.571,
+        0.5624
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 214065.6,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 3.662705425s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '3s'}]}}",
+      "timestamp": "2026-05-11T13:35:59.309980"
+    },
+    {
+      "id": 50,
+      "question": "Which player made his IPL debut for Mumbai Indians, later captained Lucknow Super Giants, and also led the Indian national team?",
+      "type": "multi-hop",
+      "ground_truth": "KL Rahul made his IPL debut with Royal Challengers Bangalore (not MI), then played for Sunrisers Hyderabad and Kings XI Punjab (which he captained), before becoming the captain of Lucknow Super Giants at their inception in 2022. He has also captained the Indian national cricket team in various formats.",
+      "pipeline": "basic_rag",
+      "answer": "",
+      "retrieved_sources": [
+        "Mumbai Indians",
+        "Indian Premier League 2017",
+        "2017 Indian Premier League",
+        "Virender Sehwag",
+        "Rohit Sharma"
+      ],
+      "retrieved_scores": [
+        0.6926,
+        0.6791,
+        0.6791,
+        0.6746,
+        0.6672
+      ],
+      "metrics": {
+        "retrieval_chunks": 5,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "latency_ms": 215092.0,
+        "cost_usd": 0.0
+      },
+      "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 18.540240536s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '18s'}]}}",
+      "timestamp": "2026-05-11T13:39:44.404075"
+    }
+  ]
+}

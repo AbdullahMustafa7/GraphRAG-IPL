@@ -1,0 +1,50 @@
+# ── Credentials & secrets ──────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+pipeline3_graphrag/tg_token.txt
+
+# ── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Virtual environments ────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+
+# ── Large generated artifacts ───────────────────────────────────────────────
+*.bin                           # FAISS index (can be 500 MB+)
+pipeline2_basic_rag/chunks.json
+pipeline2_basic_rag/chunk_metadata.json
+
+# ── Raw dataset & corpus (too large for GitHub) ─────────────────────────────
+data/raw/
+data/corpus.txt
+
+# ── Results (optional — comment out to include in repo) ─────────────────────
+# results/
+
+# ── OS & editor noise ───────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.code-workspace
+
+# ── Jupyter ─────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Streamlit ───────────────────────────────────────────────────────────────
+.streamlit/secrets.toml

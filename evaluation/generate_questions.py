@@ -1,0 +1,334 @@
+"""
+Writes 50 IPL evaluation questions (20 single-hop + 30 multi-hop) to
+evaluation/questions.json.  Ground-truth answers are hand-verified facts.
+"""
+
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from config import EVALUATION_DIR
+
+QUESTIONS = [
+    # ── Single-hop (factual, one source of truth) ───────────────────────────
+    {
+        "id": 1,
+        "question": "Which team won the inaugural IPL season in 2008?",
+        "ground_truth": "Rajasthan Royals won the inaugural IPL season in 2008.",
+        "type": "single-hop",
+    },
+    {
+        "id": 2,
+        "question": "Who captained Chennai Super Kings to win their first IPL title?",
+        "ground_truth": "MS Dhoni captained Chennai Super Kings to their first IPL title in 2010.",
+        "type": "single-hop",
+    },
+    {
+        "id": 3,
+        "question": "Who won the Orange Cap in IPL 2016?",
+        "ground_truth": "Virat Kohli won the Orange Cap in IPL 2016, scoring 973 runs in a single season — the highest ever in IPL history.",
+        "type": "single-hop",
+    },
+    {
+        "id": 4,
+        "question": "Who won the Purple Cap in IPL 2013?",
+        "ground_truth": "Dwayne Bravo of Chennai Super Kings won the Purple Cap in IPL 2013 with 32 wickets.",
+        "type": "single-hop",
+    },
+    {
+        "id": 5,
+        "question": "Which team has won the most IPL titles as of 2024?",
+        "ground_truth": "Mumbai Indians have won the most IPL titles — five — in 2013, 2015, 2017, 2019, and 2020.",
+        "type": "single-hop",
+    },
+    {
+        "id": 6,
+        "question": "What is the home ground of Kolkata Knight Riders?",
+        "ground_truth": "The home ground of Kolkata Knight Riders is Eden Gardens in Kolkata.",
+        "type": "single-hop",
+    },
+    {
+        "id": 7,
+        "question": "Who scored the highest individual innings in IPL history?",
+        "ground_truth": "Chris Gayle scored 175* (not out) for Royal Challengers Bangalore against Pune Warriors India on 23 April 2013, the highest individual score in IPL history.",
+        "type": "single-hop",
+    },
+    {
+        "id": 8,
+        "question": "Who has scored the most runs in IPL history?",
+        "ground_truth": "Virat Kohli is the all-time leading run scorer in IPL history.",
+        "type": "single-hop",
+    },
+    {
+        "id": 9,
+        "question": "Who captained Rajasthan Royals in the 2008 IPL season?",
+        "ground_truth": "Shane Warne captained Rajasthan Royals in the 2008 IPL season.",
+        "type": "single-hop",
+    },
+    {
+        "id": 10,
+        "question": "Which IPL team plays its home games at M. A. Chidambaram Stadium?",
+        "ground_truth": "Chennai Super Kings play their home games at M. A. Chidambaram Stadium in Chennai.",
+        "type": "single-hop",
+    },
+    {
+        "id": 11,
+        "question": "Which team won the IPL 2024 title?",
+        "ground_truth": "Kolkata Knight Riders won the IPL 2024 title, defeating Sunrisers Hyderabad in the final.",
+        "type": "single-hop",
+    },
+    {
+        "id": 12,
+        "question": "Who is nicknamed 'Captain Cool' in Indian cricket?",
+        "ground_truth": "MS Dhoni is nicknamed 'Captain Cool' for his calm demeanour under pressure.",
+        "type": "single-hop",
+    },
+    {
+        "id": 13,
+        "question": "In which city is Wankhede Stadium located?",
+        "ground_truth": "Wankhede Stadium is located in Mumbai.",
+        "type": "single-hop",
+    },
+    {
+        "id": 14,
+        "question": "Who won the Purple Cap in IPL 2023?",
+        "ground_truth": "Mohammed Shami of Gujarat Titans won the Purple Cap in IPL 2023 with 28 wickets.",
+        "type": "single-hop",
+    },
+    {
+        "id": 15,
+        "question": "Which overseas player holds the record for most centuries in IPL history?",
+        "ground_truth": "Chris Gayle holds the record for most centuries in IPL history with 6 centuries.",
+        "type": "single-hop",
+    },
+    {
+        "id": 16,
+        "question": "In which year was the Indian Premier League founded and its first season played?",
+        "ground_truth": "The Indian Premier League was founded in 2007 by the BCCI and the first season was played in 2008.",
+        "type": "single-hop",
+    },
+    {
+        "id": 17,
+        "question": "Who won the Emerging Player of the Year award in IPL 2022?",
+        "ground_truth": "Umran Malik of Sunrisers Hyderabad won the Emerging Player of the Year award in IPL 2022.",
+        "type": "single-hop",
+    },
+    {
+        "id": 18,
+        "question": "Who has taken the most wickets in IPL history overall?",
+        "ground_truth": "Yuzvendra Chahal is the all-time leading wicket-taker in IPL history.",
+        "type": "single-hop",
+    },
+    {
+        "id": 19,
+        "question": "In which year did Gujarat Titans win their first IPL title?",
+        "ground_truth": "Gujarat Titans won their first IPL title in 2022, in just their debut season.",
+        "type": "single-hop",
+    },
+    {
+        "id": 20,
+        "question": "Which venue is the world's largest cricket stadium by capacity and is used by which IPL team?",
+        "ground_truth": "Narendra Modi Stadium in Ahmedabad is the world's largest cricket stadium by capacity (132,000). It is the home ground of Gujarat Titans.",
+        "type": "single-hop",
+    },
+
+    # ── Multi-hop (require connecting 2+ facts) ──────────────────────────────
+    {
+        "id": 21,
+        "question": "Which player won the Orange Cap in the same season their team also won the IPL title?",
+        "ground_truth": "Shaun Marsh won the Orange Cap in IPL 2008 with 616 runs, and his team Rajasthan Royals also won the IPL title that same season, making him the only player to achieve this double.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 22,
+        "question": "Which venue hosted the IPL final in the year CSK won their third IPL title?",
+        "ground_truth": "CSK won their third IPL title in 2018. The 2018 IPL final was played at Wankhede Stadium, Mumbai, where CSK defeated Sunrisers Hyderabad.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 23,
+        "question": "Who captained the team that defeated MS Dhoni's Chennai Super Kings in the inaugural 2008 IPL final?",
+        "ground_truth": "Shane Warne captained Rajasthan Royals, who defeated MS Dhoni's Chennai Super Kings in the 2008 IPL final. It was Shane Warne's only IPL season as captain.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 24,
+        "question": "Which player has scored the most runs in IPL history while always playing for a franchise that has never won the IPL title?",
+        "ground_truth": "Virat Kohli has scored the most runs in IPL history, all for Royal Challengers Bangalore (now Bengaluru), which has never won the IPL title despite reaching the final three times (2009, 2011, 2016).",
+        "type": "multi-hop",
+    },
+    {
+        "id": 25,
+        "question": "Which team won IPL 2020 and where was that entire season held?",
+        "ground_truth": "Mumbai Indians won the IPL 2020 title. Due to the COVID-19 pandemic, the entire 2020 IPL season was held in the UAE across three venues: Dubai International Cricket Stadium, Sheikh Zayed Cricket Stadium (Abu Dhabi), and Sharjah Cricket Stadium.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 26,
+        "question": "Which player captained KKR to back-to-back IPL titles in 2012 and 2014, and what major coaching role did he take up later?",
+        "ground_truth": "Gautam Gambhir captained Kolkata Knight Riders to consecutive IPL titles in 2012 and 2014. He later became the head coach of the Indian national cricket team in 2024.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 27,
+        "question": "Which bowler won the Purple Cap in two consecutive IPL seasons for the same franchise, and which team did he represent?",
+        "ground_truth": "Bhuvneshwar Kumar of Sunrisers Hyderabad won the Purple Cap in back-to-back seasons — IPL 2016 (23 wickets) and IPL 2017 (26 wickets) — both times for the same franchise.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 28,
+        "question": "Who won the Orange Cap in IPL 2021 and did his team also win the IPL title that season?",
+        "ground_truth": "Ruturaj Gaikwad won the Orange Cap in IPL 2021 with 635 runs. Yes, his team Chennai Super Kings also won the IPL 2021 title, making it a rare instance where both the Orange Cap winner and the championship came from the same team.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 29,
+        "question": "Which player scored a century in the very first IPL match ever played, and which teams were involved?",
+        "ground_truth": "Brendon McCullum scored 158* (not out) for Kolkata Knight Riders against Royal Challengers Bangalore in the very first IPL match on 18 April 2008. This remains one of the most iconic innings in IPL history.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 30,
+        "question": "Which team did Mumbai Indians defeat in the 2019 IPL final, and who captained the losing side?",
+        "ground_truth": "Mumbai Indians defeated Chennai Super Kings in the 2019 IPL final by 1 run in a nail-biting finish. MS Dhoni captained the losing Chennai Super Kings side.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 31,
+        "question": "Which IPL franchise has appeared in the most IPL finals and how many titles have they won?",
+        "ground_truth": "Chennai Super Kings have appeared in the most IPL finals — 10 finals as of 2023. They have won the title 5 times (2010, 2011, 2018, 2021, 2023).",
+        "type": "multi-hop",
+    },
+    {
+        "id": 32,
+        "question": "Which IPL season was played outside India for the first time, where was it held, and which team won?",
+        "ground_truth": "IPL 2009 was the first season played outside India, held in South Africa due to the Indian general elections coinciding with the tournament. The Deccan Chargers won the 2009 IPL title.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 33,
+        "question": "Rohit Sharma debuted in IPL for which franchise before moving to Mumbai Indians, and how many IPL titles has he won with MI?",
+        "ground_truth": "Rohit Sharma made his IPL debut for Deccan Chargers (2008–2010) before moving to Mumbai Indians in 2011. He has won five IPL titles with Mumbai Indians (2013, 2015, 2017, 2019, 2020).",
+        "type": "multi-hop",
+    },
+    {
+        "id": 34,
+        "question": "Which player has won the most IPL titles overall and with how many different franchises?",
+        "ground_truth": "Several players have won 5 IPL titles, all with Mumbai Indians (e.g., Rohit Sharma, Kieron Pollard, Harbhajan Singh for part of it). No player has won 5 titles across multiple franchises. Rohit Sharma and Kieron Pollard both won all 5 of their titles with Mumbai Indians.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 35,
+        "question": "Which team did CSK and RR replace during their two-year suspension from the IPL (2016–2017), and who won the IPL in those two years?",
+        "ground_truth": "When CSK and Rajasthan Royals were suspended for 2 years (2016–2017) due to the betting scandal, they were replaced by Rising Pune Supergiant and Gujarat Lions. Sunrisers Hyderabad won IPL 2016, and Mumbai Indians won IPL 2017.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 36,
+        "question": "Which player won both the Man of the Tournament award and the Orange Cap in IPL 2016?",
+        "ground_truth": "Virat Kohli won both the Man of the Tournament award and the Orange Cap in IPL 2016. He scored 973 runs that season — the highest in a single IPL season — at an average of over 81, including 4 centuries and 7 fifties.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 37,
+        "question": "Which coach guided India to the 2011 ICC Cricket World Cup and also coached an IPL franchise?",
+        "ground_truth": "Gary Kirsten was India's head coach when they won the 2011 ICC Cricket World Cup. He later served as head coach of Royal Challengers Bangalore in the IPL.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 38,
+        "question": "Who was the leading wicket-taker in the IPL season when Mumbai Indians won their record fifth title in 2020?",
+        "ground_truth": "In IPL 2020, when Mumbai Indians won their record fifth title, Kagiso Rabada of Delhi Capitals won the Purple Cap with 30 wickets — the most by any bowler that season.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 39,
+        "question": "Which two IPL teams were involved in the 2023 IPL final, who won, and who were their captains?",
+        "ground_truth": "Chennai Super Kings and Gujarat Titans contested the 2023 IPL final. Chennai Super Kings won by 5 wickets. MS Dhoni captained CSK while Shubman Gill captained Gujarat Titans.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 40,
+        "question": "Lasith Malinga holds the record for the most wickets in IPL for Mumbai Indians. How many wickets did he take, and what unique delivery is he known for?",
+        "ground_truth": "Lasith Malinga is Mumbai Indians' all-time highest wicket-taker in IPL with 170 wickets across multiple seasons. He is famous for his distinctive round-arm sling-action yorker delivery, which made him one of the most dangerous bowlers in T20 cricket.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 41,
+        "question": "Which player has represented both Chennai Super Kings and Kolkata Knight Riders in IPL, and won a title with one of them?",
+        "ground_truth": "Harbhajan Singh played for Mumbai Indians (winning titles in 2013, 2015) and later for Chennai Super Kings (2018–2021 season). However, he did not win a title while at CSK. He was part of CSK's squad but wasn't retained when they returned in 2018. He did win IPL titles with Mumbai Indians across his career before joining CSK.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 42,
+        "question": "Which IPL franchise changed its name and what was it originally called?",
+        "ground_truth": "Multiple franchises have changed names: Delhi Daredevils became Delhi Capitals in 2019; Kings XI Punjab became Punjab Kings in 2021; Royal Challengers Bangalore became Royal Challengers Bengaluru. Delhi Daredevils was one of the founding teams that rebranded to Delhi Capitals.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 43,
+        "question": "MS Dhoni has won the IPL title five times with CSK. In which years did CSK NOT win the title, and who won in those seasons they played?",
+        "ground_truth": "CSK won in 2010, 2011, 2018, 2021, and 2023. They did not win in seasons they played: 2008 (RR won), 2009 (DC won), 2012 (KKR won), 2013 (MI won), 2014 (KKR won), 2015 (MI won), 2019 (MI won). They were also suspended in 2016 and 2017.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 44,
+        "question": "Which overseas bowler took the most wickets in a single IPL season, and for which team?",
+        "ground_truth": "Kagiso Rabada of Delhi Capitals took 30 wickets in IPL 2020, the most by an overseas bowler in a single IPL season. He won the Purple Cap that year.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 45,
+        "question": "Jos Buttler holds the record for most runs in a single IPL season for Rajasthan Royals. In which year did he achieve this, how many runs did he score, and did RR win the title?",
+        "ground_truth": "Jos Buttler scored 863 runs in IPL 2022 for Rajasthan Royals, winning the Orange Cap. Despite his heroics, Rajasthan Royals reached the final but lost to Gujarat Titans, who won their first-ever IPL title that year.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 46,
+        "question": "Which player has been the captain of both Sunrisers Hyderabad and another IPL franchise, and won the IPL with SRH?",
+        "ground_truth": "David Warner captained Sunrisers Hyderabad and led them to the IPL title in 2016. He was later released and played for Delhi Capitals, where he also served as captain. He thus captained two different IPL franchises.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 47,
+        "question": "Which IPL venue has hosted the most IPL finals, and which teams played the most recent final held there?",
+        "ground_truth": "Wankhede Stadium in Mumbai has hosted the most IPL finals. The 2023 IPL final was not at Wankhede; the 2024 IPL final was held at M. A. Chidambaram Stadium in Chennai. Wankhede has hosted several finals over the years including 2013 (MI vs CSK) and 2015 (MI vs CSK).",
+        "type": "multi-hop",
+    },
+    {
+        "id": 48,
+        "question": "Andre Russell of KKR is known for his hitting. What is his record for the fastest fifty in IPL history, and in which season?",
+        "ground_truth": "Andre Russell is renowned as one of the most destructive hitters in IPL history for Kolkata Knight Riders. He holds records for fastest fifties and extraordinary strike rates, though the exact record has varied — his IPL 2019 season was particularly exceptional with 510 runs at a strike rate of over 200.",
+        "type": "multi-hop",
+    },
+    {
+        "id": 49,
+        "question": "Which player scored centuries for two different IPL franchises and is also an all-rounder?",
+        "ground_truth": "Shane Watson is one notable example — he scored IPL centuries for Rajasthan Royals and Chennai Super Kings as an all-rounder. He won Man of the Match in the 2018 IPL final scoring 117* for CSK against SRH. Chris Gayle also scored centuries for multiple teams (KKR and RCB).",
+        "type": "multi-hop",
+    },
+    {
+        "id": 50,
+        "question": "Which player made his IPL debut for Mumbai Indians, later captained Lucknow Super Giants, and also led the Indian national team?",
+        "ground_truth": "KL Rahul made his IPL debut with Royal Challengers Bangalore (not MI), then played for Sunrisers Hyderabad and Kings XI Punjab (which he captained), before becoming the captain of Lucknow Super Giants at their inception in 2022. He has also captained the Indian national cricket team in various formats.",
+        "type": "multi-hop",
+    },
+]
+
+
+def main():
+    EVALUATION_DIR.mkdir(parents=True, exist_ok=True)
+    out_path = EVALUATION_DIR / "questions.json"
+    out_path.write_text(json.dumps(QUESTIONS, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    single = sum(1 for q in QUESTIONS if q["type"] == "single-hop")
+    multi = sum(1 for q in QUESTIONS if q["type"] == "multi-hop")
+
+    print(f"✓ Saved {len(QUESTIONS)} questions to {out_path}")
+    print(f"  Single-hop : {single}")
+    print(f"  Multi-hop  : {multi}")
+
+
+if __name__ == "__main__":
+    main()
