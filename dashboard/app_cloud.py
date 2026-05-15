@@ -100,30 +100,34 @@ def load_pipeline1():
 def load_pipeline3():
     try:
         from groq import Groq
-        from pipeline3_graphrag.pipeline import Pipeline3, load_token, GROQ_KEYS
+        from pipeline3_graphrag.pipeline import Pipeline3, load_token
 
-        # Prefer keys already in GROQ_KEYS (populated from os.environ above),
-        # fall back to reading st.secrets directly.
-        keys = list(GROQ_KEYS)
+        # Load Groq keys directly from st.secrets (no import from pipeline module)
+        groq_keys = [
+            st.secrets.get("GROQ_API_KEY",   ""),
+            st.secrets.get("GROQ_API_KEY_2", ""),
+            st.secrets.get("GROQ_API_KEY_3", ""),
+        ]
+        keys = [k for k in groq_keys if k.strip()]
+
+        # Fall back to os.environ if secrets not set (local dev without secrets.toml)
         if not keys:
-            for _k in ["GROQ_API_KEY", "GROQ_API_KEY_2", "GROQ_API_KEY_3"]:
-                try:
-                    v = st.secrets.get(_k, "")
-                except Exception:
-                    v = ""
-                if v.strip():
-                    keys.append(v.strip())
+            keys = [k for k in [
+                os.environ.get("GROQ_API_KEY",   ""),
+                os.environ.get("GROQ_API_KEY_2", ""),
+                os.environ.get("GROQ_API_KEY_3", ""),
+            ] if k.strip()]
 
         if not keys:
             raise ValueError("No GROQ_API_KEY found in secrets or environment.")
 
-        # TigerGraph token: try tg_token.txt first, then st.secrets["TG_TOKEN"]
-        token = load_token()
+        # TigerGraph token: try st.secrets first, then tg_token.txt (local dev)
+        try:
+            token = st.secrets.get("TG_TOKEN", "")
+        except Exception:
+            token = ""
         if not token:
-            try:
-                token = st.secrets.get("TG_TOKEN", "")
-            except Exception:
-                token = ""
+            token = load_token()
 
         groq_clients = [Groq(api_key=k) for k in keys]
         pipeline = Pipeline3(token=token, groq_clients=groq_clients)
