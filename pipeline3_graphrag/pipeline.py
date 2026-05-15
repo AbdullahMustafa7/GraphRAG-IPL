@@ -21,9 +21,25 @@ import re
 import sys
 import json
 import time
+import socket as _socket
 import requests
 from pathlib import Path
 from urllib.parse import quote
+
+# ── DNS override (local DNS can't resolve TigerGraph Savanna hostnames) ────────
+_ORIG_GETADDRINFO = _socket.getaddrinfo
+_TG_DNS_OVERRIDES = {
+    "tg-e251c6c2-fb34-41c4-a8f0-f23fc4d58e64.tg-2635877100.i.tgcloud.io": "34.207.12.133",
+}
+
+def _patched_getaddrinfo(host, port, *args, **kwargs):
+    ip = _TG_DNS_OVERRIDES.get(host)
+    if ip:
+        return _ORIG_GETADDRINFO(ip, port, *args, **kwargs)
+    return _ORIG_GETADDRINFO(host, port, *args, **kwargs)
+
+_socket.getaddrinfo = _patched_getaddrinfo
+# ───────────────────────────────────────────────────────────────────────────────
 
 from groq import Groq
 import pyTigerGraph as tg
@@ -32,15 +48,21 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 # ── Config ───────────────────────────────────────────────────────────────────
-TG_HOST      = "https://tg-1727b3d7-e9cd-4032-9168-238043254e0c.tg-2635877100.i.tgcloud.io"
-TG_SECRET    = "dvhejqo4r39v302aqi2vfim23ihqp8vn"
+TG_HOST      = "https://tg-e251c6c2-fb34-41c4-a8f0-f23fc4d58e64.tg-2635877100.i.tgcloud.io"
+TG_SECRET    = "5iat3ahdo40nfnl49vuaadmh4q2deb13"
 TG_GRAPHNAME = "MyDatabase"
 TG_USERNAME  = "tigergraph"
 TG_TOKEN_FILE = Path(__file__).parent / "tg_token.txt"
 
 TG_TIMEOUT = 10  # seconds for all TigerGraph REST calls
 
-GROQ_API_KEY          = os.getenv("GROQ_API_KEY", "")
+_RAW_KEYS = [
+    os.getenv("GROQ_API_KEY",   ""),
+    os.getenv("GROQ_API_KEY_2", ""),
+    os.getenv("GROQ_API_KEY_3", ""),
+]
+GROQ_KEYS  = [k for k in _RAW_KEYS if k.strip()]
+GROQ_API_KEY = GROQ_KEYS[0] if GROQ_KEYS else ""  # kept for compat checks
 GROQ_MODEL            = "llama-3.3-70b-versatile"
 GROQ_EXTRACT_MODEL    = "llama-3.1-8b-instant"
 
@@ -50,9 +72,19 @@ GROQ_OUTPUT_COST_PER_MILLION = 0.79
 MAX_SEED_ENTITIES  = 5
 MAX_HOP1_PER_SEED  = 10
 MAX_HOP2_PER_HOP1  = 5
-MAX_CONTEXT_ENTS   = 30
-MAX_CONTEXT_RELS   = 20
+MAX_HOP3_PER_HOP2  = 3
+MAX_CONTEXT_ENTS   = 60
+MAX_CONTEXT_RELS   = 40
 MAX_SUMMARY_CHARS  = 600
+
+# Keywords that indicate multi-hop reasoning is needed → 3-hop graph traversal
+MULTI_HOP_TRIGGERS = [
+    "same season", "also", "both", "which year", "when did", "who also", "and also"
+]
+
+def _is_multi_hop(question: str) -> bool:
+    q = question.lower()
+    return any(kw in q for kw in MULTI_HOP_TRIGGERS)
 
 # Prompts
 ENTITY_EXTRACT_PROMPT = (
@@ -63,16 +95,17 @@ ENTITY_EXTRACT_PROMPT = (
 )
 
 SYSTEM_PROMPT = (
-    "You are an expert on cricket, specifically the Indian Premier League (IPL). "
-    "Answer the following question using only the knowledge provided. "
-    "Be concise and accurate. "
-    "If the provided knowledge does not contain enough information, say so clearly."
+    "You are an IPL cricket expert. "
+    "Answer in 1-2 sentences maximum. "
+    "Be specific: include names, years, and numbers where relevant. "
+    "Do not pad your answer with extra context or caveats."
 )
 
 FALLBACK_SYSTEM_PROMPT = (
-    "You are an expert on cricket, specifically the Indian Premier League (IPL). "
-    "Answer the following question based on your knowledge of IPL cricket. "
-    "Be concise and accurate."
+    "You are an IPL cricket expert. "
+    "Answer in 1-2 sentences maximum. "
+    "Be specific: include names, years, and numbers where relevant. "
+    "Do not pad your answer with extra context or caveats."
 )
 
 
@@ -201,9 +234,10 @@ def tg_get_edges(token: str, src_type: str, src_id: str,
 
 class Pipeline3:
 
-    def __init__(self, token: str, groq_client: Groq):
-        self.token = token
-        self.groq  = groq_client
+    def __init__(self, token: str, groq_clients: list):
+        self.token   = token
+        self.clients = groq_clients  # list of Groq clients for round-robin on 429
+        self.groq    = groq_clients[0]  # default for extract (cheap model)
 
     # -- Step 1: Extract entities from question --------------------------------
     def extract_question_entities(self, question: str) -> list[str]:
@@ -248,12 +282,13 @@ class Pipeline3:
                 return []
         return []
 
-    # -- Step 2: 2-hop graph traversal ----------------------------------------
-    def graph_lookup(self, entity_ids: list[str]) -> dict:
+    # -- Step 2: graph traversal (2 or 3 hops) -----------------------------------
+    def graph_lookup(self, entity_ids: list[str], n_hops: int = 2) -> dict:
         """
         For each seed entity ID:
           Hop 1: direct RELATED_TO neighbors
           Hop 2: their neighbors (capped)
+          Hop 3: (optional, when n_hops=3) deeper neighbors for multi-hop questions
 
         Returns dict with:
           entities      -- list of {id, name, entity_type, description}
@@ -309,6 +344,7 @@ class Pipeline3:
                 fetch_and_add_entity(nbr)
             hop1_all.extend(nbrs)
 
+        hop2_all: list[str] = []
         for hop1_id in hop1_all:
             if len(entities) >= MAX_CONTEXT_ENTS:
                 break
@@ -317,6 +353,18 @@ class Pipeline3:
                 if len(entities) >= MAX_CONTEXT_ENTS:
                     break
                 fetch_and_add_entity(nbr)
+            hop2_all.extend(nbrs)
+
+        # Hop 3: only for multi-hop questions (n_hops=3)
+        if n_hops >= 3:
+            for hop2_id in hop2_all:
+                if len(entities) >= MAX_CONTEXT_ENTS:
+                    break
+                nbrs = fetch_and_add_edges(hop2_id, MAX_HOP3_PER_HOP2)
+                for nbr in nbrs:
+                    if len(entities) >= MAX_CONTEXT_ENTS:
+                        break
+                    fetch_and_add_entity(nbr)
 
         return {
             "entities":      entities[:MAX_CONTEXT_ENTS],
@@ -383,26 +431,39 @@ class Pipeline3:
         knowledge = "\n\n".join(blocks)
 
         return (
-            "Answer this question about IPL cricket using the structured "
-            "knowledge below.\n\n"
+            "Use the structured knowledge below to answer precisely.\n\n"
             f"{knowledge}\n\n"
-            f"Question: {question}\n"
-            "Answer concisely."
+            f"Question: {question}\n\n"
+            "Give a direct 1-2 sentence answer with specific facts "
+            "(names, years, numbers). No preamble."
         )
 
     # -- Steps 5 + 6: LLM call with fallback -----------------------------------
     def call_llm(self, prompt: str,
                  fallback: bool = False) -> tuple[str, int, int, float]:
         """
-        Groq LLM call.
+        Groq LLM call with round-robin key rotation on 429.
         Returns (answer, prompt_tokens, completion_tokens, latency_ms).
         """
-        system = FALLBACK_SYSTEM_PROMPT if fallback else SYSTEM_PROMPT
-        backoff = [30, 60, 120]
-        for attempt in range(len(backoff) + 1):
+        system  = FALLBACK_SYSTEM_PROMPT if fallback else SYSTEM_PROMPT
+        n_keys  = len(self.clients)
+        exhausted = [False] * n_keys
+        key_idx = 0
+        MAX_ROUNDS = 5
+
+        for _ in range(MAX_ROUNDS * n_keys):
+            if all(exhausted):
+                time.sleep(30)
+                exhausted = [False] * n_keys
+
+            if exhausted[key_idx]:
+                key_idx = (key_idx + 1) % n_keys
+                continue
+
+            client = self.clients[key_idx]
             try:
                 t0 = time.monotonic()
-                resp = self.groq.chat.completions.create(
+                resp = client.chat.completions.create(
                     model=GROQ_MODEL,
                     messages=[
                         {"role": "system", "content": system},
@@ -421,10 +482,13 @@ class Pipeline3:
             except Exception as exc:
                 err = str(exc)
                 is_rate = any(k in err.lower() for k in ("429", "rate_limit", "too many requests"))
-                if is_rate and attempt < len(backoff):
-                    time.sleep(backoff[attempt])
+                if is_rate:
+                    exhausted[key_idx] = True
+                    key_idx = (key_idx + 1) % n_keys
                     continue
                 raise
+
+        raise RuntimeError("All Groq keys exhausted after max retries")
 
     # -- Main entry point per question -----------------------------------------
     def run_query(self, question_id: int, question: str) -> dict:
@@ -440,9 +504,12 @@ class Pipeline3:
                 # Step 1: entity extraction (Groq, always available)
                 entity_ids = self.extract_question_entities(question)
 
+                # Detect whether this is a multi-hop question → 3-hop traversal
+                n_hops = 3 if _is_multi_hop(question) else 2
+
                 # Steps 2 + 3: graph traversal (TigerGraph — may be down)
                 if entity_ids:
-                    graph_ctx = self.graph_lookup(entity_ids)
+                    graph_ctx = self.graph_lookup(entity_ids, n_hops=n_hops)
                 else:
                     graph_ctx = {"entities": [], "relationships": [], "seeds_found": 0}
 
@@ -455,6 +522,7 @@ class Pipeline3:
             except TigerGraphUnavailable as exc:
                 print(f"    [TG UNAVAILABLE] {exc} — using direct LLM fallback")
                 tg_unavailable = True
+                n_hops        = 0
                 entity_ids    = []
                 graph_ctx     = {"entities": [], "relationships": [], "seeds_found": 0}
                 community_summary = ""
@@ -480,7 +548,7 @@ class Pipeline3:
                 "latency_ms":            latency_ms,
                 "cost_usd":              _cost(pt, ct),
                 "graph_entities_found":  n_entities,
-                "graph_hops":            2,
+                "graph_hops":            n_hops,
                 "fallback":              use_fallback,
                 "tg_unavailable":        tg_unavailable,
                 "model":                 GROQ_MODEL,
@@ -502,7 +570,7 @@ class Pipeline3:
                 "latency_ms":            0.0,
                 "cost_usd":              0.0,
                 "graph_entities_found":  0,
-                "graph_hops":            2,
+                "graph_hops":            3 if _is_multi_hop(question) else 2,
                 "fallback":              True,
                 "tg_unavailable":        False,
                 "model":                 GROQ_MODEL,
@@ -524,8 +592,8 @@ def run_batch(
     Saves results incrementally to results_path after every question.
     Returns a summary dict.
     """
-    if not GROQ_API_KEY:
-        raise ValueError("GROQ_API_KEY not set in .env")
+    if not GROQ_KEYS:
+        raise ValueError("No GROQ_API_KEY set in .env")
 
     print("[p3] Loading TigerGraph token from tg_token.txt ...")
     token = load_token()
@@ -534,8 +602,9 @@ def run_batch(
     else:
         print("[p3] Token loaded")
 
-    groq_client = Groq(api_key=GROQ_API_KEY)
-    pipeline    = Pipeline3(token=token, groq_client=groq_client)
+    groq_clients = [Groq(api_key=k) for k in GROQ_KEYS]
+    print(f"[p3] Using {len(groq_clients)} Groq key(s) for answer generation")
+    pipeline     = Pipeline3(token=token, groq_clients=groq_clients)
 
     done_ids    = {r["id"] for r in existing_results if not r.get("error")}
     all_results = {r["id"]: r for r in existing_results}
