@@ -130,7 +130,7 @@ def load_pipeline3():
             token = load_token()
 
         groq_clients = [Groq(api_key=k) for k in keys]
-        pipeline = Pipeline3(token=token, groq_clients=groq_clients)
+        pipeline = Pipeline3(token=token, groq_client=groq_clients[0])
         return pipeline
     except Exception as exc:
         return exc
