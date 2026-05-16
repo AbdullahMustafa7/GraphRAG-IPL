@@ -1,137 +1,138 @@
-# 🏏 GraphRAG IPL Hackathon
+# GraphRAG IPL: Proving Graph-Based Retrieval Beats Basic RAG on Every Metric
 
-> **81.8% token reduction** using TigerGraph GraphRAG on the IPL Wikipedia dataset
+> **GraphRAG achieves 94.6% fewer tokens than Basic RAG with 14pp better accuracy — proven across 50 benchmark questions on 665 IPL Wikipedia articles.**
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white)
-![TigerGraph](https://img.shields.io/badge/TigerGraph-GraphRAG-orange?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PC9zdmc+)
-![Groq](https://img.shields.io/badge/Groq-llama--3.3--70b-brightgreen?logo=groq)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.57-red?logo=streamlit&logoColor=white)
-![Hackathon](https://img.shields.io/badge/TigerGraph-GraphRAG%20Hackathon%202026-purple)
+![TigerGraph](https://img.shields.io/badge/TigerGraph-GraphRAG-orange)
+![Groq](https://img.shields.io/badge/Groq-llama--3.3--70b-brightgreen)
+![Streamlit](https://img.shields.io/badge/Streamlit-Cloud-red?logo=streamlit&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 Submission for the **TigerGraph GraphRAG Inference Hackathon 2026**.  
-Three retrieval pipelines are benchmarked head-to-head on 50 IPL trivia questions drawn from 665 Wikipedia articles.
+Three retrieval pipelines are benchmarked head-to-head on 50 IPL trivia questions drawn from 665 Wikipedia articles ingested into a TigerGraph knowledge graph.
 
 ---
 
-## 🏆 Key Result
+## Live Demo
 
-| Pipeline | Avg Tokens | Avg Cost / Query | Avg Latency |
-|---|---|---|---|
-| P1 — LLM-Only (Gemini 2.5 Flash) | ~500 | ~$0.000038 | ~2,100 ms |
-| P2 — Basic RAG (FAISS + Groq) | **2,541** | $0.000194 | 1,875 ms |
-| **P3 — GraphRAG (TigerGraph + Groq)** | **464** | $0.000277 | ~1,200 ms |
-
-> **GraphRAG uses 81.8% fewer tokens than Basic RAG** (464 vs 2,541 avg tokens per query), because graph traversal delivers only the precise subgraph relevant to the question instead of bulk-retrieving the top-K embedding neighbours.
+| | Link |
+|---|---|
+| **Interactive Dashboard** | [graphrag-ipl.streamlit.app](https://graphrag-ipl.streamlit.app) |
+| **GitHub Repository** | [github.com/AbdullahMustafa7/GraphRAG-IPL](https://github.com/AbdullahMustafa7/GraphRAG-IPL) |
 
 ---
 
-## 🏗️ Architecture
+## Benchmark Results (50 questions, llama-3.3-70b-versatile judge)
 
-```
-                        ┌─────────────────────────────────────────────┐
-                        │           665 IPL Wikipedia Articles          │
-                        └──────────────┬──────────────────────────────┘
-                                       │ data/collect_dataset.py
-                   ┌───────────────────┼───────────────────────┐
-                   ▼                   ▼                        ▼
-         ┌──────────────┐    ┌──────────────────┐    ┌──────────────────────┐
-         │  Pipeline 1  │    │   Pipeline 2      │    │    Pipeline 3        │
-         │  LLM-Only    │    │   Basic RAG       │    │    GraphRAG          │
-         │              │    │                  │    │                      │
-         │ Gemini 2.5   │    │ all-MiniLM-L6-v2 │    │ Groq (entity        │
-         │ Flash        │    │ → FAISS index    │    │ extraction)          │
-         │              │    │                  │    │    ↓                  │
-         │ No retrieval │    │ Top-5 chunk      │    │ TigerGraph           │
-         │              │    │ retrieval        │    │ 2-hop traversal      │
-         │              │    │    ↓             │    │    ↓                  │
-         │              │    │ Groq llama-70b   │    │ Community context    │
-         │              │    │ generation       │    │    ↓                  │
-         │              │    │                  │    │ Groq llama-70b       │
-         └──────┬───────┘    └───────┬──────────┘    └──────────┬───────────┘
-                │                   │                            │
-                └───────────────────┴────────────────────────────┘
-                                       │
-                              ┌────────▼────────┐
-                              │ Streamlit        │
-                              │ Comparison       │
-                              │ Dashboard        │
-                              │ localhost:8502   │
-                              └─────────────────┘
-```
+| Pipeline | Avg Tokens | Accuracy | BERTScore F1 | BERTScore Rescaled |
+|---|---|---|---|---|
+| P1 — LLM-Only | 174 | 62% | 0.8724 | 0.6178 |
+| P2 — Basic RAG (FAISS) | 2,541 | 50% | 0.7974 | 0.3930 |
+| **P3 — GraphRAG (TigerGraph)** | **137** | **64%** | **0.8826 ✅** | **0.6484 ✅** |
 
-### Pipeline Deep Dive
+✅ = meets bonus threshold (BERTScore F1 >= 0.88, Rescaled >= 0.55)
 
-**Pipeline 1 — LLM-Only** (`pipeline1_llm_only/`)  
-Sends the question directly to Gemini 2.5 Flash with a cricket expert system prompt. No retrieval, no context. Pure parametric knowledge. Establishes the baseline.
+### Key Stats
 
-**Pipeline 2 — Basic RAG** (`pipeline2_basic_rag/`)  
-1. Chunks all 665 articles into 512-token windows with 50-token overlap  
-2. Embeds chunks with `all-MiniLM-L6-v2` → FAISS flat inner-product index  
-3. Retrieves top-5 chunks by cosine similarity  
-4. Sends the 5-chunk context block (~2,500 tokens) to Groq llama-3.3-70b-versatile  
-
-**Pipeline 3 — GraphRAG** (`pipeline3_graphrag/`)  
-1. Extracts entity names from the question using Groq llama-3.1-8b-instant (~50 tokens)  
-2. Looks up entities in TigerGraph as seed vertices  
-3. 2-hop `RELATED_TO` graph traversal (capped at 30 entities, 20 relationships)  
-4. Fetches community summaries via `BELONGS_TO` → `Community` edges  
-5. Builds a focused structured prompt (~464 tokens) and calls Groq llama-3.3-70b-versatile  
-6. Falls back to direct Groq call if TigerGraph is unreachable (graceful degradation)
+| Metric | Value |
+|---|---|
+| Token reduction vs Basic RAG | **94.6%** |
+| BERTScore F1 bonus threshold (>= 0.88) | **Hit — 0.8826** |
+| BERTScore Rescaled bonus threshold (>= 0.55) | **Hit — 0.6484** |
+| Knowledge graph entities | **8,373** |
+| Knowledge graph relationships | **5,349** |
+| Wikipedia articles ingested | **665** |
+| Total tokens ingested | **2M+** |
+| Evaluation questions | **50** (20 single-hop, 30 multi-hop) |
 
 ---
 
-## 📁 Project Structure
+## Dataset
+
+The corpus covers **Indian Premier League (IPL)** cricket, ingested from Wikipedia:
+
+- **Players** — batters, bowlers, all-rounders, wicket-keepers
+- **Teams** — all 10 franchises, historical franchises (Pune, Kochi, etc.)
+- **Seasons** — IPL 2008 through 2024, venues, results, winners
+- **Awards** — Orange Cap, Purple Cap, Most Valuable Player, Emerging Player
+- **Coaches & Officials** — head coaches, selectors, BCCI administrators
+- **Venues** — home grounds, hosting cities, stadium capacities
+
+Raw articles live in `data/raw/`. Preprocessed corpus at `data/corpus.txt`.
+
+---
+
+## How It Works
+
+### Pipeline 1 — LLM-Only Baseline
+Questions are sent directly to **Groq llama-3.3-70b-versatile** with no retrieval context. Minimal tokens, no infrastructure required. Sets the floor for raw model knowledge.
+
+### Pipeline 2 — Basic RAG (FAISS + Sentence Transformers)
+The corpus is chunked and embedded with **all-MiniLM-L6-v2**, stored in a **FAISS** vector index. At query time the top-5 chunks are retrieved and prepended to the prompt. Highest token cost due to long retrieved passages.
+
+### Pipeline 3 — GraphRAG (TigerGraph)
+1. **Entity extraction** — Groq llama-3.1-8b-instant extracts named entities from the question
+2. **Graph traversal** — Up to 3-hop traversal of `RELATED_TO` edges in TigerGraph retrieves the most relevant entities and relationships (60 entities, 40 relationships max)
+3. **Community context** — `BELONGS_TO` edges pull community summaries for broader thematic context
+4. **Answer generation** — Structured graph context is formatted into a concise prompt; Groq llama-3.3-70b-versatile answers in 1-2 sentences
+
+Multi-hop questions (containing keywords like "also", "both", "same season", "which year") automatically trigger 3-hop traversal instead of 2-hop.
+
+---
+
+## Project Structure
 
 ```
 graphrag-hackathon/
-│
-├── data/
-│   ├── collect_dataset.py          # Scrapes 665 IPL Wikipedia articles
-│   ├── raw/                        # Article .txt files (gitignored — too large)
-│   └── corpus.txt                  # Merged corpus (gitignored — too large)
-│
-├── pipeline1_llm_only/
-│   └── pipeline.py                 # Gemini 2.5 Flash, no retrieval
-│
-├── pipeline2_basic_rag/
-│   ├── pipeline.py                 # Chunking + FAISS + Groq
-│   ├── chunks.json                 # Generated on first run (gitignored)
-│   ├── chunk_metadata.json         # Generated on first run (gitignored)
-│   └── faiss_index.bin             # Generated on first run (gitignored — large)
-│
-├── pipeline3_graphrag/
-│   ├── pipeline.py                 # Entity extraction + TigerGraph + Groq
-│   ├── ingest.py                   # Bulk article → entity/relationship ingestion
-│   ├── communities.py              # Community detection & summarisation
-│   ├── setup_tigergraph.py         # Schema creation on TigerGraph Cloud
-│   ├── refresh_token.py            # Rotate TigerGraph bearer token
-│   └── tg_token.txt                # Bearer token (gitignored — credentials)
-│
-├── dashboard/
-│   └── app.py                      # Streamlit comparison dashboard
-│
-├── evaluation/
-│   └── generate_questions.py       # Generates 50 IPL eval questions (JSON)
-│
-├── results/
-│   ├── pipeline2_results.json      # P2 batch run output
-│   ├── pipeline3_results.json      # P3 batch run output
-│   ├── ingest_progress.json        # TigerGraph ingestion checkpoint
-│   └── ingest_failures.json        # Failed ingestion records for retry
-│
-├── config.py                       # API keys, model names, paths, pricing
-├── run_pipeline1.py                # Batch runner — Pipeline 1
-├── run_pipeline2.py                # Batch runner — Pipeline 2
-├── run_pipeline3.py                # Batch runner — Pipeline 3
-├── .env.example                    # Environment variable template
-└── .gitignore
+|
++-- pipeline1_llm_only/
+|   +-- pipeline.py             # Direct Groq LLM call, no retrieval
+|
++-- pipeline2_basic_rag/
+|   +-- pipeline.py             # FAISS retrieval + Groq answer
+|   +-- chunks.json             # Pre-chunked corpus
+|   +-- chunk_metadata.json     # Chunk source metadata
+|   +-- faiss_index.bin         # Serialised FAISS vector index
+|
++-- pipeline3_graphrag/
+|   +-- pipeline.py             # GraphRAG: entity extraction + TG traversal + Groq
+|   +-- ingest.py               # Wikipedia -> TigerGraph ingestion
+|   +-- communities.py          # Community detection & summary generation
+|   +-- setup_tigergraph.py     # Schema creation on TigerGraph Savanna
+|   +-- refresh_token.py        # Bearer token rotation helper
+|   +-- _tg_dns_fix.py          # DNS override for local TigerGraph resolution
+|
++-- dashboard/
+|   +-- app.py                  # Full Streamlit dashboard (local, all 3 live)
+|   +-- app_cloud.py            # Streamlit Cloud version (P2 shows cached results)
+|
++-- evaluation/
+|   +-- evaluate.py             # LLM-as-Judge + BERTScore evaluation
+|   +-- generate_questions.py   # Auto-generates 50 benchmark questions
+|   +-- questions.json          # 50 Q&A pairs with ground truth
+|
++-- results/
+|   +-- pipeline1_results.json  # P1 answers + metrics (50 questions)
+|   +-- pipeline2_results.json  # P2 answers + metrics (50 questions)
+|   +-- pipeline3_results.json  # P3 answers + metrics (50 questions)
+|   +-- evaluation_report.json  # Judge verdicts + BERTScore per question
+|
++-- data/
+|   +-- raw/                    # 665 raw Wikipedia article JSON files
+|   +-- corpus.txt              # Merged plaintext corpus (2M+ tokens)
+|
++-- run_pipeline1.py            # Batch runner for Pipeline 1
++-- run_pipeline2.py            # Batch runner for Pipeline 2
++-- run_pipeline3.py            # Batch runner for Pipeline 3
++-- config.py                   # Shared config (API keys, paths, model names)
++-- requirements.txt            # Python dependencies
 ```
 
 ---
 
-## ⚙️ Setup
+## Setup & Installation
 
-### 1. Clone & install dependencies
+### 1. Clone and install dependencies
 
 ```bash
 git clone https://github.com/AbdullahMustafa7/GraphRAG-IPL.git
@@ -139,167 +140,104 @@ cd GraphRAG-IPL
 pip install -r requirements.txt
 ```
 
-Or install manually:
+### 2. Configure environment variables
 
-```bash
-pip install google-genai groq faiss-cpu sentence-transformers tiktoken \
-            pyTigerGraph python-dotenv requests streamlit plotly pandas tqdm
-```
-
-### 2. Configure API keys
-
-Copy the example and fill in your keys:
-
-```bash
-cp .env.example .env
-```
+Copy `.env.example` to `.env` and fill in your keys:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
-GROQ_API_KEY=your_groq_api_key_here
+GROQ_API_KEY=gsk_...
+GROQ_API_KEY_2=gsk_...        # optional -- for rate limit key rotation
+GROQ_API_KEY_3=gsk_...        # optional -- for rate limit key rotation
+GEMINI_API_KEY=...             # only needed if regenerating the corpus
 ```
 
-> **TigerGraph:** The cloud instance credentials are embedded in `pipeline3_graphrag/pipeline.py`. Fetch your bearer token once with:
-> ```bash
-> python pipeline3_graphrag/refresh_token.py
-> ```
-
-### 3. Collect the dataset
+### 3. Run Pipeline 1 — LLM-Only
 
 ```bash
-python data/collect_dataset.py
-```
-
-Downloads ~665 IPL Wikipedia articles into `data/raw/` and merges them into `data/corpus.txt`. Takes ~10 minutes (polite rate-limiting at 0.5s per article).
-
-### 4. Generate evaluation questions
-
-```bash
-python evaluation/generate_questions.py
-```
-
-Produces `evaluation/questions.json` — 50 questions split between single-hop and multi-hop.
-
----
-
-## 🚀 Running the Pipelines
-
-### Pipeline 1 — LLM-Only (Gemini)
-
-```bash
-# Full 50-question batch
 python run_pipeline1.py
-
-# Quick smoke-test (5 questions)
-python run_pipeline1.py --limit 5
-
-# Single question
-python pipeline1_llm_only/pipeline.py "Who won the IPL 2023 title?"
+# Results -> results/pipeline1_results.json
 ```
 
-### Pipeline 2 — Basic RAG (FAISS + Groq)
+### 4. Run Pipeline 2 — Basic RAG
 
 ```bash
-# Build FAISS index only (runs once, cached to disk)
-python run_pipeline2.py --build-only
-
-# Full 50-question batch
+# FAISS index is pre-built in pipeline2_basic_rag/faiss_index.bin
 python run_pipeline2.py
-
-# Smoke-test; slower delay if rate-limited
-python run_pipeline2.py --limit 5 --delay 6
-
-# Single question
-python pipeline2_basic_rag/pipeline.py "Who won the IPL 2023 title?"
+# Results -> results/pipeline2_results.json
 ```
 
-### Pipeline 3 — GraphRAG (TigerGraph + Groq)
+### 5. Set up TigerGraph (Pipeline 3)
 
 ```bash
-# Step A: Ingest articles into TigerGraph (resumable)
+# a) Create schema on TigerGraph Savanna
+python pipeline3_graphrag/setup_tigergraph.py
+
+# b) Ingest Wikipedia corpus into the graph
 python pipeline3_graphrag/ingest.py
 
-# Step B: Build community summaries (run after >500 articles ingested)
+# c) Generate community summaries
 python pipeline3_graphrag/communities.py
 
-# Step C: Full 50-question batch
-python run_pipeline3.py
-
-# Smoke-test
-python run_pipeline3.py --limit 5 --delay 5
+# d) Refresh the bearer token (run whenever the token expires ~7 days)
+python pipeline3_graphrag/refresh_token.py
 ```
 
----
-
-## 📊 Dashboard
+### 6. Run Pipeline 3 — GraphRAG
 
 ```bash
-streamlit run dashboard/app.py
+python run_pipeline3.py --delay 3
+# Options:
+#   --type single   only single-hop questions
+#   --type multi    only multi-hop questions
+#   --limit N       run first N questions
+# Results -> results/pipeline3_results.json
 ```
 
-Opens at **http://localhost:8502**
+### 7. Evaluate all pipelines
 
-Features:
-- Live query box — runs all three pipelines simultaneously
-- Side-by-side answers with token count, latency, and cost
-- 🏆 Best badge on the lowest-token pipeline
-- Plotly bar charts (tokens + cost per pipeline)
-- Results history loaded from `results/*.json`
-- **"GraphRAG uses 81.8% fewer tokens than Basic RAG"** highlight stat
-- Yellow `⚠️` warning (not a red error) when TigerGraph is temporarily unavailable — fallback answer still shown
+```bash
+python evaluation/evaluate.py --include-p3 --delay 1
+# Prints summary table + saves results/evaluation_report.json
+```
+
+### 8. Launch the dashboard
+
+```bash
+# Full local version (all 3 pipelines live):
+streamlit run dashboard/app.py
+
+# Cloud-optimised version (P2 shows cached results):
+streamlit run dashboard/app_cloud.py
+```
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology |
 |---|---|
-| Graph database | [TigerGraph Cloud](https://tgcloud.io) — `MyDatabase` graph |
-| LLM (P1) | Google Gemini 2.5 Flash via `google-genai` |
-| LLM (P2 & P3) | Groq `llama-3.3-70b-versatile` (generation) + `llama-3.1-8b-instant` (entity extraction) |
-| Embeddings | `sentence-transformers` — `all-MiniLM-L6-v2` (384-dim) |
-| Vector index | FAISS `IndexFlatIP` (exact cosine similarity) |
-| Tokenizer | `tiktoken` — `cl100k_base` encoding |
-| Dashboard | Streamlit 1.57 + Plotly |
-| Dataset | Wikipedia via `wikipedia-api` — 665 IPL articles |
+| Knowledge graph | [TigerGraph Savanna](https://www.tigergraph.com/) (free tier) |
+| LLM inference | [Groq](https://groq.com/) — llama-3.3-70b-versatile |
+| Entity extraction | Groq — llama-3.1-8b-instant |
+| Vector search (P2) | [FAISS](https://github.com/facebookresearch/faiss) |
+| Embeddings (P2) | [sentence-transformers](https://sbert.net/) — all-MiniLM-L6-v2 |
+| Evaluation judge | Groq — llama-3.3-70b-versatile |
+| Semantic scoring | [BERTScore](https://github.com/Tiiiger/bert_score) — distilbert-base-uncased |
+| Graph analytics | [NetworkX](https://networkx.org/) |
+| Dashboard | [Streamlit](https://streamlit.io/) + [Plotly](https://plotly.com/) |
+| Data collection | [Wikipedia-API](https://pypi.org/project/Wikipedia-API/) |
+| Language | Python 3.13 |
 
 ---
 
-## 📈 Results Detail
-
-### Token efficiency (measured on completed queries)
-
-```
-Pipeline 2 — Basic RAG
-  Avg prompt tokens    : 2,524.1
-  Avg completion tokens:    16.8
-  Avg total tokens     : 2,540.9
-  Avg latency          : 1,874.6 ms
-  Total cost (22 ok)   : $0.004276
-
-Pipeline 3 — GraphRAG
-  Avg total tokens     :   463.5   ← 81.8% fewer than P2
-  Avg cost / query     : $0.000277
-  Graph entities found : ~14 per query (2-hop traversal)
-  Fallback rate        : varies with ingestion completeness
-```
-
-### Why GraphRAG uses fewer tokens
-
-Basic RAG retrieves the top-5 chunks regardless of relevance — each chunk is 512 tokens, so every prompt is padded with ~2,500 tokens of context whether it's needed or not.
-
-GraphRAG uses entity-centric traversal: the question is parsed for entity names (e.g. `ms_dhoni`, `chennai_super_kings`), and only the 2-hop neighbourhood of those entities is included. A typical subgraph has 10–30 entities and 10–20 relationships — compact, structured, and on-topic.
-
----
-
-## 🏅 Hackathon
+## Hackathon
 
 **Event:** TigerGraph GraphRAG Inference Hackathon 2026  
-**Track:** Open — Best use of TigerGraph for GraphRAG inference  
-**Repository:** https://github.com/AbdullahMustafa7/GraphRAG-IPL  
+**Built by:** Abdullah Mustafa  
+**Repo:** [github.com/AbdullahMustafa7/GraphRAG-IPL](https://github.com/AbdullahMustafa7/GraphRAG-IPL)
 
 ---
 
-## 📄 License
+## License
 
 MIT
